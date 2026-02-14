@@ -170,39 +170,27 @@ function runEventLoop() {
         output.textContent = log;
     };
 
-    addLog('=== Event Loop Demonstration ===\n');
+addLog(' Event Loop Check ');
 
-    // STEP 1: Synchronous code executes first.
-    // This runs immediately because it's on the call stack.
-    // Call stack is checked first in JavaScript event loop.
-    addLog('1. Synchronous: Start');
+    // 1. Normal sync code runs first
+    addLog('1. Sync Start');
 
-    // STEP 2: setTimeout callback is registered.
-    // Even with 0ms delay, it goes to the Macrotask Queue (Task Queue)
-    // Macrotasks execute AFTER all microtasks are completed
-    // setTimeout, setInterval, and I/O operations are macrotasks.
+    // 2. setTimeout with 0ms
+    // This goes to the task queue so it runs last
     setTimeout(() => {
-        addLog('4. setTimeout: Executed after 0ms (callback queue)');
+        addLog('4. Timeout runs (Macrotask)');
     }, 0);
 
-    // STEP 3: Promise callback is registered
-    // Promise.then() goes to the Microtask Queue.
-    // Microtasks have HIGHER priority than macrotasks.
-    // Microtasks execute right after the current call stack is empty
-    // Promises, queueMicrotask, and MutationObserver are microtasks
+    // 3. Promise
+    // This is a microtask so it runs before the timeout
     Promise.resolve().then(() => {
-        addLog('3. Promise: Resolved (microtask queue)');
+        addLog('3. Promise runs (Microtask)');
     });
 
-    // STEP 4: More synchronous code executes immediately.
-    // Still part of the initial call stack.
-    addLog('2. Synchronous: End');
+    // 4. End of sync code
+    addLog('2. Sync End');
 
-    // EXECUTION ORDER SUMMARY:
-    // 1. Call Stack (Synchronous code) - executes first
-    // 2. Microtask Queue (Promises) - executes after call stack is empty
-    // 3. Macrotask Queue (setTimeout) - executes after all microtasks are done
-    // This demonstrates: Synchronous → Microtasks → Macrotasks
+    // Order observed: Sync code -> Promise -> Timeout
 }
 
 function saveToStorage() {
@@ -254,7 +242,7 @@ function doSearch() {
 }
 
 function showArrayMethods() {
-    console.log('=== Array Methods Demonstration ===');
+    console.log(' Array Methods Demonstration');
 
     const userNames = userArr.map(user => user.name);
     console.log('MAP - All user names:', userNames);
