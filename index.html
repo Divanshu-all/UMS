@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+</head>
+<body>
+    <h1>User Management System</h1>
+    
+    <div id="userForm">
+        <h2>Add New User</h2>
+        <input type="text" id="userName" placeholder="Name" />
+        <input type="email" id="userEmail" placeholder="Email" />
+        <select id="userRole">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="guest">Guest</option>
+        </select>
+        <button onclick="addUser()">Add User</button>
+    </div>
+
+    <div id="operations">
+        <h2>Operations</h2>
+        <button onclick="showAll()">Display All Users</button>
+        <button onclick="showActiveOnly()">Show Active Users Only</button>
+        <button onclick="filterByRole()">Filter by Role</button>
+        <button onclick="searchUsers()">Search Users</button>
+    </div>
+
+    <div id="filterSection" style="display:none;">
+        <select id="roleFilter">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="guest">Guest</option>
+        </select>
+        <button onclick="applyFilter()">Apply Filter</button>
+    </div>
+
+    <div id="searchSection" style="display:none;">
+        <input type="text" id="searchInput" placeholder="Search by name or email" />
+        <button onclick="doSearch()">Search</button>
+    </div>
+
+    <div id="userList">
+        <h2>Users</h2>
+        <div id="usersContainer"></div>
+    </div>
+
+    <div id="eventLoopDemo">
+        <h2>Event Loop Demonstration</h2>
+        <button onclick="runEventLoop()">Run Event Loop Demo</button>
+        <pre id="eventLoopOutput"></pre>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
