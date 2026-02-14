@@ -7,12 +7,12 @@ function addUser() {
     const role = document.getElementById('userRole').value;
 
     if (!name || !email) {
-        alert('Please fill in all fields!');
+        alert('Please fill in all fields');
         return;
     }
 
     if (!email.includes('@')) {
-        alert('Please enter a valid email!');
+        alert('Please enter a valid email');
         return;
     }
 
@@ -85,7 +85,7 @@ function removeUser(userId) {
             userArr.splice(index, 1);
             saveToStorage();
             showAll();
-            alert('User deleted successfully!');
+            alert('User deleted successfully');
         }
     }
 }
@@ -144,12 +144,12 @@ function testAsyncFetch() {
 
 async function testAsync() {
     if (userArr.length === 0) {
-        alert('Please add some users first!');
+        alert('Please add some users first');
         return;
     }
 
     try {
-        console.log('Fetching user with async/await...');
+        console.log('Fetching user with async/await');
         const user = await getUser(1);
         console.log('Success! User found:', user);
         alert(`Found user: ${user.name}`);
@@ -172,23 +172,37 @@ function runEventLoop() {
 
     addLog('=== Event Loop Demonstration ===\n');
 
+    // STEP 1: Synchronous code executes first.
+    // This runs immediately because it's on the call stack.
+    // Call stack is checked first in JavaScript event loop.
     addLog('1. Synchronous: Start');
 
+    // STEP 2: setTimeout callback is registered.
+    // Even with 0ms delay, it goes to the Macrotask Queue (Task Queue)
+    // Macrotasks execute AFTER all microtasks are completed
+    // setTimeout, setInterval, and I/O operations are macrotasks.
     setTimeout(() => {
         addLog('4. setTimeout: Executed after 0ms (callback queue)');
     }, 0);
 
+    // STEP 3: Promise callback is registered
+    // Promise.then() goes to the Microtask Queue.
+    // Microtasks have HIGHER priority than macrotasks.
+    // Microtasks execute right after the current call stack is empty
+    // Promises, queueMicrotask, and MutationObserver are microtasks
     Promise.resolve().then(() => {
         addLog('3. Promise: Resolved (microtask queue)');
     });
 
+    // STEP 4: More synchronous code executes immediately.
+    // Still part of the initial call stack.
     addLog('2. Synchronous: End');
 
-    addLog('\n/* EXECUTION ORDER EXPLANATION:');
-    addLog('1. Synchronous code runs first (call stack)');
-    addLog('2. Promises are microtasks - run after call stack, before setTimeout');
-    addLog('3. setTimeout callbacks are macrotasks - run last');
-    addLog('Order: Synchronous → Microtasks (Promises) → Macrotasks (setTimeout) */');
+    // EXECUTION ORDER SUMMARY:
+    // 1. Call Stack (Synchronous code) - executes first
+    // 2. Microtask Queue (Promises) - executes after call stack is empty
+    // 3. Macrotask Queue (setTimeout) - executes after all microtasks are done
+    // This demonstrates: Synchronous → Microtasks → Macrotasks
 }
 
 function saveToStorage() {
@@ -253,7 +267,7 @@ function showArrayMethods() {
 }
 
 function showLoops() {
-    console.log('=== Looping Demonstration ===');
+    console.log(' Looping Demo ');
 
     console.log('Using for loop:');
     for (let i = 0; i < userArr.length; i++) {
@@ -278,7 +292,7 @@ function init() {
         showAll();
     }
 
-    console.log('User Management System initialized!');
+    console.log('User Management System initialized');
     console.log('You can call testAsyncFetch() or testAsync() in console to test async features');
 }
 
